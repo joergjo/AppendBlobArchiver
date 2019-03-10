@@ -1,2 +1,2 @@
 # AppendBlobArchiver
-Simple proof of concept for archiving Append Blobs
+A simple proof of concept for archiving Append Blobs using two Azure Functions: One to identify Append Blobs to be archived (`BlobScanner`), and one to copy each such blob to a Block Blob (`BlobArchiver`), which can be automatically moved to a more cost effective storage tier for long-term retention by using [Lifecycle Management Policies](https://docs.microsoft.com/en-us/azure/storage/blobs/storage-lifecycle-management-concepts). 
