@@ -22,11 +22,11 @@ namespace AppendBlogArchiver
         [FunctionName(nameof(BlobArchiver))]
         public async Task Run(
             [QueueTrigger("archivecommands", Connection = "StorageConnectionString")]BlobArchiveCommand command,
-            [Blob("source/{BlobName}", FileAccess.ReadWrite)]CloudAppendBlob sourceBlob,
-            [Blob("archive/{BlobName}", FileAccess.ReadWrite)]CloudBlockBlob archiveBlob,
+            [Blob("source/{BlobName}", FileAccess.ReadWrite, Connection = "StorageConnectionString")]CloudAppendBlob sourceBlob,
+            [Blob("archive/{BlobName}", FileAccess.ReadWrite, Connection = "StorageConnectionString")]CloudBlockBlob archiveBlob,
             ILogger logger)
         {
-            logger.LogInformation("Received command to archive blob {BlobName}.", command.BlobName);
+            logger.LogInformation("BlobArchiver received command to archive blob {BlobName}.", command.BlobName);
 
             if (!await archiveBlob.ExistsAsync() ||
                 !_ignoreDuplicateStrategy(sourceBlob, archiveBlob))
